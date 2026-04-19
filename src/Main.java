@@ -93,8 +93,12 @@ public class Main {
     }
     // Ends
 
-    // 初始化の方法
-    // 至于存档什么的以后再说吧
+    // 初始化の方法↓
+    // 可以说奇怪的话吗
+    // 请加入存档功能吧!!!
+    // 追加功能??
+    // 存档??
+    // 怎么想都不可能的吧?????
     public static void init(String usr) {
         myself.username = usr;
         myself.HP = 5000;
