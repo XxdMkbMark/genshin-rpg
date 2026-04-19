@@ -89,6 +89,20 @@ public class Main {
         System.out.println("---------------------");
         System.out.print("选择攻击方式: ");
     }
+    public static ArrayList<String> printBackpackMenu() {
+        System.out.println("-------- 背包 --------");
+        System.out.println("0. 返回");
+        int itemIndex = 1;
+        ArrayList<String> currentItemsInBackpack = new ArrayList<>();
+        for (Map.Entry<String, Integer> currentlyProcessingItem : backpack.entrySet()) {
+            currentItemsInBackpack.add(currentlyProcessingItem.getKey());
+            System.out.println(itemIndex + ". " + currentlyProcessingItem.getKey() + " x" + currentlyProcessingItem.getValue());
+            itemIndex++;
+        }
+        System.out.println("---------------------");
+        System.out.print("选择物品序号: ");
+        return currentItemsInBackpack;
+    }
     // Ends
 
     // 伤害计算方法↓
@@ -176,21 +190,12 @@ public class Main {
                     }
                     else if (choice == 2) {
                         if (backpack.isEmpty()) {
-                            System.out.println("背包空空如也!");
+                            System.out.println("背包空空如也! 打怪来获取更多物品吧!");
                             continue;
                         }
                         else {
-                            System.out.println("-------- 背包 --------");
-                            System.out.println("0. 返回");
+                            ArrayList<String> currentItemsInBackpack = printBackpackMenu();;
                             int itemIndex = 1;
-                            ArrayList<String> currentItemsInBackpack = new ArrayList<>();
-                            for (Map.Entry<String, Integer> currentlyProcessingItem : backpack.entrySet()) {
-                                currentItemsInBackpack.add(currentlyProcessingItem.getKey());
-                                System.out.println(itemIndex + ". " + currentlyProcessingItem.getKey() + " x" + currentlyProcessingItem.getValue());
-                                itemIndex++;
-                            }
-                            System.out.println("---------------------");
-                            System.out.print("选择物品序号: ");
                             itemIndex = sc.nextInt();
                             if (itemIndex == 0) {
                                 continue;
