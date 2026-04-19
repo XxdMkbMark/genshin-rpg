@@ -54,6 +54,14 @@ public class Main {
             if (backpack.get(chosenItem) <= 0) {
                 backpack.remove(chosenItem);
             }
+        } else if (currentItem.effect.equals("ATK")) {
+            myself.baseDamage += currentItem.addAttack;
+            System.out.println("你使用了 "+currentItem.name);
+            System.out.println("你增加了 "+currentItem.addAttack+"点 攻击力");
+            backpack.replace(chosenItem, backpack.get(chosenItem)-1);
+            if (backpack.get(chosenItem) <= 0) {
+                backpack.remove(chosenItem);
+            }
         }
         if (currentItem.effect.equals("NONE")) {
             System.out.println("你使用了 "+currentItem.name+",但似乎并没什么用");
