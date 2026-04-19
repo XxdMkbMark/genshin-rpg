@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     static String[] availableItems = {"史莱姆凝胶", "树莓", "枫达", "摩拉", "苹果", "杏仁豆腐", "甜甜花酿鸡"};
     static String[] possibleMonsters = {"丘丘人","水史莱姆"};
-    static String[] usableAttackMethod = {"普攻", "重击"};
+    static String[] atkMenuItems = {"普攻", "重击", "取消"};
     static String[] moveMenuItems = {"攻击", "物品", "角色属性", "逃跑"};
 
     static HashMap<String, Monster> monsterDex = new HashMap<>();
@@ -72,7 +72,7 @@ public class Main {
     }
     // Ends
 
-    // 在此行以下封装重复性打印相关的方法
+    // 在此行以下封装 重复性打印 相关的方法
     public static void printMoveMenu() {
         System.out.println("------ 行动菜单 ------");
         for (int menuItemIndex = 0; menuItemIndex < moveMenuItems.length; menuItemIndex++) {
@@ -80,6 +80,14 @@ public class Main {
         }
         System.out.println("---------------------");
         System.out.print("选择行动: ");
+    }
+    public static void printAtkMenu() {
+        System.out.println("------ 攻击方式 ------");
+        for (int menuItemIndex = 0; menuItemIndex < atkMenuItems.length; menuItemIndex++) {
+            System.out.println((menuItemIndex+1)+". "+atkMenuItems[menuItemIndex]);
+        }
+        System.out.println("---------------------");
+        System.out.print("选择攻击方式: ");
     }
     // Ends
 
@@ -112,6 +120,7 @@ public class Main {
         AllItemType.defineItems(itemDex);
     }
 
+    // 游戏逻辑
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         returnMonster monsters = null;
@@ -136,10 +145,10 @@ public class Main {
                     choice = sc.nextInt();
 
                     if (choice == 1) {
-                        System.out.println("选择攻击方式: 1.普攻 2.重击 3.取消");
+                        printAtkMenu();
                         choice = sc.nextInt();
                         if (choice == 1) {
-                            System.out.println(usr + " 使用了 " + usableAttackMethod[choice - 1]);
+                            System.out.println(usr + " 使用了 " + atkMenuItems[choice - 1]);
                             double defenseMultiplier = getDefMultiplier(myself.level, currentMonster.defence);
                             int finalDamage = (int) (myself.baseDamage*defenseMultiplier);
                             currentMonster.damage(finalDamage);
@@ -152,7 +161,7 @@ public class Main {
                                 System.out.println("体力不足! 无法使用 重击!");
                                 continue;
                             }
-                            System.out.println(usr + " 使用了 " + usableAttackMethod[choice - 1]);
+                            System.out.println(usr + " 使用了 " + atkMenuItems[choice - 1]);
                             currentMonster.damage(myself.criticalDamage);
                             myself.energy -= 25;
                             System.out.println("消耗 25点 体力");
@@ -220,6 +229,7 @@ public class Main {
                     System.out.println(usr + " 当前血量: " + myself.HP);
                 }
             }
+
             if (!isEscaped) {
                 System.out.println(usr + " 打败了 " + currentMonster.name + "\n");
                 pickUpItems();
