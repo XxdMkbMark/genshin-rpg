@@ -80,7 +80,7 @@ public class Main {
     }
     // Ends
 
-    // 在此行以下封装 重复性打印 相关的方法
+    // 重复性打印方法↓
     public static void printMoveMenu() {
         System.out.println("------ 行动菜单 ------");
         for (int menuItemIndex = 0; menuItemIndex < moveMenuItems.length; menuItemIndex++) {
@@ -218,6 +218,7 @@ public class Main {
                         }
                     } else if (choice == 3) {
                         myself.showStatus();
+                        sc.nextInt();
                     } else if (choice == 4) {
                         System.out.println(usr + " 逃跑了" + "\n");
                         int damageWouldBeMaking = currentMonster.getAttackDamage();

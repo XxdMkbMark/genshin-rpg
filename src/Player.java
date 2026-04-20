@@ -25,5 +25,8 @@ public class Player {
         System.out.println("防御力: " + defence);
         System.out.println("体力: " + energy);
         System.out.println("---------------------");
+        System.out.println("1. 升级");
+        System.out.println("---------------------");
+        System.out.println("选择选项: ");
     }
 }
