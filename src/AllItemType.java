@@ -10,5 +10,6 @@ public class AllItemType {
         itemDex.put("苹果", new Item(5, "苹果", "HEAL", 100, 0));
         itemDex.put("杏仁豆腐", new Item(6, "杏仁豆腐", "ATK", 0, 60));
         itemDex.put("甜甜花酿鸡", new Item(7, "甜甜花酿鸡", "HEAL", 100, 0));
+        itemDex.put("大英雄的经验", new Item(8, "大英雄的经验", "XP", 0 ,0));
     }
 }
