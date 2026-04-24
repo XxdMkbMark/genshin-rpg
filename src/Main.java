@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Main {
-    static String[] availableItems = {"史莱姆凝胶", "树莓", "枫达", "摩拉", "苹果", "杏仁豆腐", "甜甜花酿鸡"};
+    static String[] availableItems = {"史莱姆凝胶", "树莓", "枫达", "摩拉", "苹果", "杏仁豆腐", "甜甜花酿鸡", "大英雄的经验"};
     static String[] possibleMonsters = {"丘丘人","水史莱姆"};
     static String[] atkMenuItems = {"普攻", "重击", "取消"};
     static String[] moveMenuItems = {"攻击", "物品", "角色属性", "逃跑"};
@@ -43,33 +43,44 @@ public class Main {
             backpack.put(item2, 1);
         }
     }
-    public static void consumeItem(String chosenItem) {
+    public static boolean consumeItem(String chosenItem) {
         Item currentItem = itemDex.get(chosenItem);
-        if (currentItem.effect.equals("HEAL")) {
-            myself.heal(currentItem.regenerateHP);
-            System.out.println("你使用了 "+currentItem.name);
-            System.out.println("你恢复了 "+currentItem.regenerateHP+"点 体力");
-            System.out.println("当前血量: "+myself.HP);
-            backpack.replace(chosenItem, backpack.get(chosenItem)-1);
-            if (backpack.get(chosenItem) <= 0) {
-                backpack.remove(chosenItem);
+        switch (currentItem.effect) {
+            case "HEAL" -> {
+                myself.heal(currentItem.regenerateHP);
+                System.out.println("你使用了 " + currentItem.name);
+                System.out.println("你恢复了 " + currentItem.regenerateHP + "点 体力");
+                System.out.println("当前血量: " + myself.HP);
+                backpack.replace(chosenItem, backpack.get(chosenItem) - 1);
+                if (backpack.get(chosenItem) <= 0) {
+                    backpack.remove(chosenItem);
+                }
+                return true;
             }
-        } else if (currentItem.effect.equals("ATK")) {
-            myself.baseDamage += currentItem.addAttack;
-            System.out.println("你使用了 "+currentItem.name);
-            System.out.println("你增加了 "+currentItem.addAttack+"点 攻击力");
-            backpack.replace(chosenItem, backpack.get(chosenItem)-1);
-            if (backpack.get(chosenItem) <= 0) {
-                backpack.remove(chosenItem);
+            case "ATK" -> {
+                myself.baseDamage += currentItem.addAttack;
+                System.out.println("你使用了 " + currentItem.name);
+                System.out.println("你增加了 " + currentItem.addAttack + "点 攻击力");
+                backpack.replace(chosenItem, backpack.get(chosenItem) - 1);
+                if (backpack.get(chosenItem) <= 0) {
+                    backpack.remove(chosenItem);
+                }
+                return true;
+            }
+            case "NONE" -> {
+                System.out.println("你使用了 " + currentItem.name + ",但似乎并没什么用");
+                backpack.replace(chosenItem, backpack.get(chosenItem) - 1);
+                if (backpack.get(chosenItem) <= 0) {
+                    backpack.remove(chosenItem);
+                }
+                return true;
+            }
+            case "UNUSABLE" -> {
+                System.out.println("这个物品不能被使用哦!");
+                return false;
             }
         }
-        if (currentItem.effect.equals("NONE")) {
-            System.out.println("你使用了 "+currentItem.name+",但似乎并没什么用");
-            backpack.replace(chosenItem, backpack.get(chosenItem)-1);
-            if (backpack.get(chosenItem) <= 0) {
-                backpack.remove(chosenItem);
-            }
-        }
+        return false;
     }
     public static String encounterMonsters(String usr) {
         String monster =  possibleMonsters[rand.nextInt(possibleMonsters.length)];
@@ -213,8 +224,12 @@ public class Main {
                                 continue;
                             }
                             String chosenItem = currentItemsInBackpack.get(itemIndex-1);
-                            consumeItem(chosenItem);
-                            break;
+                            boolean isConsumed = consumeItem(chosenItem);
+                            if (isConsumed) {
+                                break;
+                            } else if (!isConsumed) {
+                                continue;
+                            }
                         }
                     } else if (choice == 3) {
                         myself.showStatus();
